@@ -6,6 +6,10 @@ public class Main {
     }
 
     static int chop(int value, int[] sortedArray) {
+        for (int i = 0; i < sortedArray.length; i++) {
+            if(sortedArray[i] == value)
+                return i;
+        }
         return -1;
     }
 }

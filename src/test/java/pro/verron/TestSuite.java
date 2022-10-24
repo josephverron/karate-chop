@@ -12,10 +12,16 @@ public class TestSuite {
         assertEquals(-1, chop(3, new int[0]));
     }
 
-    /*assert_equal(-1, chop(3, []))
-    /*assert_equal(-1, chop(3, [1]))
-    /*assert_equal(0,  chop(1, [1]))
-            #
+    @Test
+    void unfoundable_value_in_array(){
+        assertEquals(-1, chop(3, new int[]{1}));
+    }
+
+    @Test
+    void findable_value_in_array(){
+        assertEquals(0, chop(1, new int[]{1}));
+    }
+
     /*assert_equal(0,  chop(1, [1, 3, 5]))
     /*assert_equal(1,  chop(3, [1, 3, 5]))
     /*assert_equal(2,  chop(5, [1, 3, 5]))
