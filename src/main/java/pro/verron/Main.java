@@ -12,7 +12,7 @@ public class Main {
         return VALUE_NOT_FOUND;
     }
 
-    static int binarySearch(int searched, int[] sortedValues) {
+    static int binarySearch(int searchedValue, int[] sortedValues) {
         if(sortedValues.length == 0)
             return VALUE_NOT_FOUND;
 
@@ -23,7 +23,7 @@ public class Main {
             int currentIndex = (lowestIndex + highestIndex) / 2;
             int currentValue = sortedValues[currentIndex];
 
-            if(currentValue == searched)
+            if(currentValue == searchedValue)
                 return currentIndex;
 
             if (currentIndex == highestIndex)
@@ -32,7 +32,7 @@ public class Main {
             if (currentIndex == lowestIndex)
                 return VALUE_NOT_FOUND;
 
-            if(currentValue > searched)
+            if(currentValue > searchedValue)
                 highestIndex = currentIndex;
             else
                 lowestIndex = currentIndex;
