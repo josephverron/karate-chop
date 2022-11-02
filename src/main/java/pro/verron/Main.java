@@ -18,25 +18,18 @@ public class Main {
 
         int lowestIndex = 0;
         int highestIndex = sortedValues.length;
-        int currentIndex = sortedValues.length;
 
         while(highestIndex > lowestIndex){
-            int nextIndex = (lowestIndex + highestIndex) / 2;
-
-            if(nextIndex == currentIndex)
-                return VALUE_NOT_FOUND;
-
-            currentIndex = nextIndex;
-
+            int currentIndex = (lowestIndex + highestIndex) / 2;
             int currentValue = sortedValues[currentIndex];
 
             if(currentValue == searched)
                 return currentIndex;
 
-            if (currentIndex == sortedValues.length - 1)
+            if (currentIndex == highestIndex)
                 return VALUE_NOT_FOUND;
 
-            if (currentIndex == 0)
+            if (currentIndex == lowestIndex)
                 return VALUE_NOT_FOUND;
 
             if(currentValue > searched)
@@ -44,7 +37,6 @@ public class Main {
             else
                 lowestIndex = currentIndex;
         }
-
-        return currentIndex;
+        return VALUE_NOT_FOUND;
     }
 }
