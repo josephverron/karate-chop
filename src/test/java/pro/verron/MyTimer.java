@@ -4,7 +4,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 
-public class MyTimer implements AutoCloseable{
+public class MyTimer implements AutoCloseable {
     private final Instant start;
     private final Clock clock;
     private Instant end;
