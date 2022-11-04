@@ -21,11 +21,12 @@ public class TestSuite {
         return Stream.of(
                 new ProceduralSearch<>(),
                 new RecursiveSearch<>(),
-                new SublistSearch<>()
+                new SublistSearch<>(),
+                new OOSearch<>()
         );
     }
 
-    @ParameterizedTest
+    //@ParameterizedTest
     @MethodSource("searches")
     @Timeout(15)
     void search_function_is_fast(BinarySearch<Integer> searchFunction) {
