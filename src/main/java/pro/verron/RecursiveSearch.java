@@ -12,36 +12,22 @@ class RecursiveSearch<T extends Comparable<T>> implements BinarySearch<T> {
 
     @Override
     public OptionalInt findIndex(T searchedValue, List<T> sortedValues) {
-        return recurse(
-                searchedValue,
-                sortedValues,
-                0,
-                sortedValues.size() - 1);
+        return findIndex(searchedValue, sortedValues, 0, sortedValues.size() - 1);
     }
 
-    OptionalInt recurse(T searchedValue,
-                        List<T> sortedValues,
-                        int lowestIndex, int highestIndex) {
+    private OptionalInt findIndex(T searchedValue, List<T> sortedValues, int lowestIndex, int highestIndex) {
         if (highestIndex < lowestIndex)
             return empty();
 
         var currentIndex = (lowestIndex + highestIndex) / 2;
         var currentValue = sortedValues.get(currentIndex);
+        int comparison = currentValue.compareTo(searchedValue);
 
-        if (currentValue.compareTo(searchedValue) == 0) {
+        if (comparison > 0)
+            return findIndex(searchedValue, sortedValues, lowestIndex, currentIndex - 1);
+        else if (comparison < 0)
+            return findIndex(searchedValue, sortedValues, currentIndex + 1, highestIndex);
+        else
             return OptionalInt.of(currentIndex);
-        }
-
-        if (currentValue.compareTo(searchedValue) > 0) {
-            var nextHighestIndex = currentIndex - 1;
-            return recurse(searchedValue, sortedValues, lowestIndex, nextHighestIndex);
-        }
-
-        if (currentValue.compareTo(searchedValue) < 0) {
-            var nextLowestIndex = currentIndex + 1;
-            return recurse(searchedValue, sortedValues, nextLowestIndex, highestIndex);
-        }
-
-        return empty();
     }
 }

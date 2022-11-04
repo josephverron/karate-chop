@@ -9,6 +9,5 @@ public interface BinarySearch<T extends Comparable<T>> {
         return findIndex(searchedValue, sortedValues)
                 .orElse(-1);
     }
-
     OptionalInt findIndex(T searchedValue, List<T> sortedValues);
 }

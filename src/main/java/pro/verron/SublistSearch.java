@@ -2,6 +2,7 @@ package pro.verron;
 
 import java.util.List;
 import java.util.OptionalInt;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Sublist approach
@@ -9,22 +10,25 @@ import java.util.OptionalInt;
 class SublistSearch<T extends Comparable<T>> implements BinarySearch<T> {
     @Override
     public OptionalInt findIndex(T searchedValue, List<T> sortedValues) {
-        var globalMargin = 0;
         var sublist = sortedValues;
+
+        var startIndex = new AtomicInteger();
+        SubLister<T> subLister = (list, start, end) -> {
+            startIndex.addAndGet(start);
+            return list.subList(start, end);
+        };
 
         while (!sublist.isEmpty()) {
             var currentIndex = sublist.size() / 2;
             var currentValue = sublist.get(currentIndex);
+            int comparison = searchedValue.compareTo(currentValue);
 
-            if (currentValue == searchedValue)
-                return OptionalInt.of(globalMargin + currentIndex);
-
-            if (searchedValue.compareTo(currentValue) > 0) {
-                int subMargin = currentIndex + 1;
-                globalMargin += subMargin;
-                sublist = sublist.subList(subMargin, sublist.size());
-            } else
-                sublist = sublist.subList(0, currentIndex);
+            if (comparison > 0)
+                sublist = subLister.apply(sublist, currentIndex + 1, sublist.size());
+            else if(comparison < 0)
+                sublist = subLister.apply(sublist,0, currentIndex);
+            else
+                return OptionalInt.of(startIndex.get() + currentIndex);
         }
         return OptionalInt.empty();
     }

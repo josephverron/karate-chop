@@ -14,14 +14,14 @@ public class ProceduralSearch<T extends Comparable<T>> implements BinarySearch<T
         while (highestIndex >= lowestIndex) {
             var currentIndex = (lowestIndex + highestIndex) / 2;
             var currentValue = sortedValues.get(currentIndex);
+            var comparison = currentValue.compareTo(searchedValue);
 
-            if (currentValue == searchedValue)
-                return OptionalInt.of(currentIndex);
-
-            if (currentValue.compareTo(searchedValue) > 0)
+            if (comparison > 0)
                 highestIndex = currentIndex - 1;
-            else
+            else if (comparison < 0)
                 lowestIndex = currentIndex + 1;
+            else
+                return OptionalInt.of(currentIndex);
         }
         return empty();
     }
