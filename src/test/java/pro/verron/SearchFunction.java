@@ -1,5 +1,7 @@
 package pro.verron;
 
-public interface SearchFunction {
-    int search(int searchedValue, int[] sortedValues);
+import java.util.List;
+
+public interface SearchFunction<T extends Comparable<T>> {
+    int search(T searchedValue, List<T> sortedValues);
 }
