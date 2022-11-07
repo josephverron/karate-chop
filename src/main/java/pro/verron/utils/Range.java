@@ -1,4 +1,4 @@
-package pro.verron;
+package pro.verron.utils;
 
 public class Range {
     private final int start;

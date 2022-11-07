@@ -1,4 +1,6 @@
-package pro.verron;
+package pro.verron.binary.procedural;
+
+import pro.verron.binary.BinarySearch;
 
 import java.util.List;
 import java.util.OptionalInt;

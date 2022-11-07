@@ -3,6 +3,12 @@ package pro.verron;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import pro.verron.binary.BinarySearch;
+import pro.verron.binary.linear.LinearSearch;
+import pro.verron.binary.object.OOSearch;
+import pro.verron.binary.procedural.ProceduralSearch;
+import pro.verron.binary.recursive.RecursiveSearch;
+import pro.verron.binary.sublist.SublistSearch;
 
 import java.util.List;
 import java.util.Random;

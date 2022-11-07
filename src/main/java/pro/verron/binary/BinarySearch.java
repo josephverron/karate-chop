@@ -1,4 +1,4 @@
-package pro.verron;
+package pro.verron.binary;
 
 import java.util.List;
 import java.util.OptionalInt;

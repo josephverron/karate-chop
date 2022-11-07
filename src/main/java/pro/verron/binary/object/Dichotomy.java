@@ -1,4 +1,6 @@
-package pro.verron;
+package pro.verron.binary.object;
+
+import pro.verron.utils.Range;
 
 import java.util.OptionalInt;
 import java.util.function.IntFunction;

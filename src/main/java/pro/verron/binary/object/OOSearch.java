@@ -1,4 +1,8 @@
-package pro.verron;
+package pro.verron.binary.object;
+
+import pro.verron.Dichotomy;
+import pro.verron.utils.Range;
+import pro.verron.binary.BinarySearch;
 
 import java.util.List;
 import java.util.OptionalInt;

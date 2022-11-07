@@ -1,4 +1,4 @@
-package pro.verron;
+package pro.verron.binary.sublist;
 
 import java.util.List;
 
