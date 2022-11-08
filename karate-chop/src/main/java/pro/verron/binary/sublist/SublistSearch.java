@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Sublist approach
  */
-class SublistSearch<T extends Comparable<T>> implements BinarySearch<T> {
+public class SublistSearch<T extends Comparable<T>> implements BinarySearch<T> {
     @Override
     public OptionalInt findIndex(T searchedValue, List<T> sortedValues) {
         var sublist = sortedValues;

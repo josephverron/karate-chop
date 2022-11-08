@@ -9,7 +9,7 @@ public class Range {
         this.end = end;
     }
 
-    static Range ofSize(int size) {
+    public static Range ofSize(int size) {
         return new Range(0, size - 1);
     }
 

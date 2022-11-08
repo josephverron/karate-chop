@@ -10,7 +10,7 @@ import static java.util.OptionalInt.empty;
 /**
  * Recursive
  */
-class RecursiveSearch<T extends Comparable<T>> implements BinarySearch<T> {
+public class RecursiveSearch<T extends Comparable<T>> implements BinarySearch<T> {
 
     @Override
     public OptionalInt findIndex(T searchedValue, List<T> sortedValues) {

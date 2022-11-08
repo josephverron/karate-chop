@@ -32,7 +32,7 @@ public class TestSuite {
         );
     }
 
-    //@ParameterizedTest
+    @ParameterizedTest
     @MethodSource("searches")
     @Timeout(15)
     void search_function_is_fast(BinarySearch<Integer> searchFunction) {
