@@ -1,7 +1,7 @@
 package pro.verron.binary.object;
 
-import pro.verron.utils.Range;
 import pro.verron.binary.BinarySearch;
+import pro.verron.utils.Range;
 
 import java.util.List;
 import java.util.OptionalInt;
