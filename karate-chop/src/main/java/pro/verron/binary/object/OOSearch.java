@@ -18,5 +18,4 @@ public class OOSearch<T extends Comparable<T>> implements BinarySearch<T> {
         }
         return dichotomy.result();
     }
-
 }
