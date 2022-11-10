@@ -1,4 +1,4 @@
-package pro.verron;
+package pro.verron.utils;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -9,7 +9,7 @@ public class MyTimer implements AutoCloseable {
     private final Clock clock;
     private Instant end;
 
-    MyTimer(){
+    public MyTimer(){
         clock = Clock.systemUTC();
         start = clock.instant();
     }

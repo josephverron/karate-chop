@@ -1,9 +1,9 @@
-package pro.verron;
+package pro.verron.binary;
 
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import pro.verron.binary.BinarySearch;
+import pro.verron.utils.MyTimer;
 import pro.verron.binary.linear.LinearSearch;
 import pro.verron.binary.object.OOSearch;
 import pro.verron.binary.procedural.ProceduralSearch;
