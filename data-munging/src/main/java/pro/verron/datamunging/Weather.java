@@ -32,7 +32,9 @@ public class Weather {
     }
 
     private static <T> T extract(String str, int beginIndex, int endIndex, Function<String, T> function) {
-        var dayString = str.substring(beginIndex, endIndex).trim().replace("*", "");
+        var dayString = str.substring(beginIndex, endIndex)
+                .trim()
+                .replace("*", "");
         return function.apply(dayString);
     }
 
