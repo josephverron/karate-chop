@@ -21,5 +21,4 @@ public class Weather {
             System.out.println("Day with lowest temperature range: " + day);
         }
     }
-
 }

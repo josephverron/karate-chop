@@ -1,6 +1,8 @@
 package pro.verron.datamunging;
 
 import static java.lang.Character.isDigit;
+import static pro.verron.datamunging.Parsers.DOUBLE_PARSER;
+import static pro.verron.datamunging.Parsers.INTEGER_PARSER;
 
 enum WeatherRowParser implements Parser<WeatherRow> {
     INSTANCE;
@@ -8,9 +10,9 @@ enum WeatherRowParser implements Parser<WeatherRow> {
     @Override
     public WeatherRow apply(String str) {
         return new WeatherRow(
-                Parser.of(Integer::parseInt).apply(str.substring(0, 4)),
-                Parser.of(Double::parseDouble).apply(str.substring(4, 8)),
-                Parser.of(Double::parseDouble).apply(str.substring(10, 14))
+                INTEGER_PARSER.apply(str.substring(0, 4)),
+                DOUBLE_PARSER.apply(str.substring(4, 8)),
+                DOUBLE_PARSER.apply(str.substring(10, 14))
         );
     }
 
