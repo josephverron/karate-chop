@@ -21,11 +21,11 @@ public class Weather {
         INSTANCE;
 
         @Override
-        public WeatherRow parse(String str) {
+        public WeatherRow parse(String line) {
             return new WeatherRow(
-                    INTEGER_PARSER.parse(str.substring(0, 4)),
-                    DOUBLE_PARSER.parse(str.substring(4, 8)),
-                    DOUBLE_PARSER.parse(str.substring(10, 14))
+                    INTEGER_PARSER.parse(line.substring(0, 4)),
+                    DOUBLE_PARSER.parse(line.substring(4, 8)),
+                    DOUBLE_PARSER.parse(line.substring(10, 14))
             );
         }
         public boolean canParse(String line) {

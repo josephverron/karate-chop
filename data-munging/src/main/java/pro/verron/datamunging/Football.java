@@ -15,9 +15,6 @@ public class Football {
     enum FootballRowParser implements Parser<FootballTeamRow> {
         INSTANCE;
 
-        boolean canParse(String line) {
-            return '.' == line.charAt(5);
-        }
         @Override
         public FootballTeamRow parse(String str) {
             return new FootballTeamRow(
@@ -25,6 +22,9 @@ public class Football {
                     INTEGER_PARSER.parse(str.substring(43, 47)),
                     INTEGER_PARSER.parse(str.substring(48, 52))
             );
+        }
+        boolean canParse(String line) {
+            return '.' == line.charAt(5);
         }
 
     }
