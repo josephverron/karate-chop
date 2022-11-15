@@ -1,40 +1,35 @@
-package pro.verron.datamunging;
+package pro.verron.datamunging
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.Comparator.comparing
 
-import static java.lang.Character.isDigit;
-import static java.util.Comparator.comparing;
-import static pro.verron.datamunging.Parsers.DOUBLE_PARSER;
-import static pro.verron.datamunging.Parsers.INTEGER_PARSER;
-
-public class Weather {
-    record WeatherRow(int day, double maxTemp, double minTemp) {
-        public double tempRange() {
-            return maxTemp - minTemp;
-        }
+class WeatherRow(val day: Int, private val maxTemp: Double, private val minTemp: Double) {
+    fun tempRange(): Double {
+        return maxTemp - minTemp
     }
-    private static final Function<String, WeatherRow> PARSER = line -> new WeatherRow(
-            INTEGER_PARSER.apply(line.substring(0, 4)),
-            DOUBLE_PARSER.apply(line.substring(4, 8)),
-            DOUBLE_PARSER.apply(line.substring(10, 14))
-    );
-    public static boolean canParse(String line) {
-        return line.length() > 3 && isDigit(line.charAt(3));
-    }
-    public static void main(String[] args) throws IOException {
-        try (Stream<String> lines = Files.lines(Paths.get("weather.dat"))) {
-            String day = lines
-                    .filter(Weather::canParse)
-                    .map(PARSER)
-                    .min(comparing(WeatherRow::tempRange))
-                    .map(WeatherRow::day)
-                    .map(String::valueOf)
-                    .orElse("None");
-            System.out.println("Day with lowest temperature range: " + day);
-        }
+}
+private fun parser(line: String): WeatherRow {
+    return WeatherRow(
+            Parsers.INTEGER_PARSER.apply(line.substring(0, 4)),
+            Parsers.DOUBLE_PARSER.apply(line.substring(4, 8)),
+            Parsers.DOUBLE_PARSER.apply(line.substring(10, 14)),
+    )
+}
+private fun canParse(line: String): Boolean {
+    return line.length > 3 && Character.isDigit(line[3])
+}
+@Throws(IOException::class)
+fun main(args: Array<String>) {
+    Files.lines(Paths.get("weather.dat")).use { lines ->
+        val day = lines
+                .filter(::canParse)
+                .map(::parser)
+                .min(comparing(WeatherRow::tempRange))
+                .map(WeatherRow::day)
+                .map(Int::toString)
+                .orElse("None")
+        println("Day with lowest temperature range: $day")
     }
 }

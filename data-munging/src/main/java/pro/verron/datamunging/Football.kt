@@ -1,35 +1,36 @@
-package pro.verron.datamunging;
+package pro.verron.datamunging
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import pro.verron.datamunging.Parsers.INTEGER_PARSER
+import pro.verron.datamunging.Parsers.STRING_PARSER
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.Comparator.comparing
 
-import static java.util.Comparator.comparing;
-import static pro.verron.datamunging.Parsers.INTEGER_PARSER;
-import static pro.verron.datamunging.Parsers.STRING_PARSER;
-
-public class Football {
-    record FootballTeamRow(String team, int scoredFor, int scoredAgainst) {}
-    private static final Function<String, FootballTeamRow> PARSER = str -> new FootballTeamRow(
+class FootballTeamRow(val team: String, private val scoredFor: Int, private val scoredAgainst: Int){
+    fun ratio(): Int{
+        return (scoredAgainst + 1) / (scoredFor + scoredAgainst + 1)
+    }
+}
+private fun parser(str: String): FootballTeamRow {
+    return FootballTeamRow(
             STRING_PARSER.apply(str.substring(7, 23)),
             INTEGER_PARSER.apply(str.substring(43, 47)),
             INTEGER_PARSER.apply(str.substring(48, 52))
-    );
-    static boolean canParse(String line) {
-        return '.' == line.charAt(5);
-    }
-    public static void main(String[] args) throws IOException {
-        try (Stream<String> lines = Files.lines(Paths.get("football.dat"))) {
-            String team = lines
-                    .filter(Football::canParse)
-                    .map(PARSER)
-                    .min(comparing(footballTeamRow -> Math.abs(footballTeamRow.scoredFor() - footballTeamRow.scoredAgainst())))
-                    .map(FootballTeamRow::team)
-                    .map(String::valueOf)
-                    .orElse("None");
-            System.out.println("Team with minimal diff between goal taken and goal given: " + team);
-        }
+    )
+}
+private fun canParse(line: String): Boolean {
+    return '.' == line[5]
+}
+@Throws(IOException::class)
+fun main(args: Array<String>) {
+    Files.lines(Paths.get("football.dat")).use { lines ->
+        val team = lines
+                .filter(::canParse)
+                .map(::parser)
+                .min(comparing(FootballTeamRow::ratio))
+                .map(FootballTeamRow::team)
+                .orElse("None")
+        println("Team with minimal diff between goal taken and goal given: $team")
     }
 }
