@@ -3,6 +3,7 @@ package pro.verron.datamunging;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.lang.Character.isDigit;
@@ -16,30 +17,19 @@ public class Weather {
             return maxTemp - minTemp;
         }
     }
-
-    enum WeatherRowParser implements Parser<WeatherRow> {
-        INSTANCE;
-
-        @Override
-        public WeatherRow parse(String line) {
-            return new WeatherRow(
-                    INTEGER_PARSER.parse(line.substring(0, 4)),
-                    DOUBLE_PARSER.parse(line.substring(4, 8)),
-                    DOUBLE_PARSER.parse(line.substring(10, 14))
-            );
-        }
-        public boolean canParse(String line) {
-            return line.length() > 3 && isDigit(line.charAt(3));
-        }
-
+    private static final Function<String, WeatherRow> PARSER = line -> new WeatherRow(
+            INTEGER_PARSER.apply(line.substring(0, 4)),
+            DOUBLE_PARSER.apply(line.substring(4, 8)),
+            DOUBLE_PARSER.apply(line.substring(10, 14))
+    );
+    public static boolean canParse(String line) {
+        return line.length() > 3 && isDigit(line.charAt(3));
     }
-
     public static void main(String[] args) throws IOException {
-        WeatherRowParser parser = WeatherRowParser.INSTANCE;
         try (Stream<String> lines = Files.lines(Paths.get("weather.dat"))) {
             String day = lines
-                    .filter(parser::canParse)
-                    .map(parser::parse)
+                    .filter(Weather::canParse)
+                    .map(PARSER)
                     .min(comparing(WeatherRow::tempRange))
                     .map(WeatherRow::day)
                     .map(String::valueOf)
