@@ -14,4 +14,3 @@ for leftSize, rightSize in zip(range(1, 6), reversed(range(1, 6))):
     for left, right in product(shortlist[leftSize], shortlist[rightSize]):
         if left + right in shortlist[6]:
             results.append((left, right))
-    print((leftSize, rightSize), len(results))
