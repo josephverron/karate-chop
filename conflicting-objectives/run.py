@@ -1,4 +1,3 @@
-from itertools import product
 from time import perf_counter
 
 start = perf_counter()
