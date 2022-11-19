@@ -23,17 +23,20 @@ class CharacterTree:
     def __str__(self):
         return json.dumps(self._inner, cls=CharacterTreeEncoder, indent=2)
 
+    def _contains(self, iterator, size: int):
+        selection = self._inner.get(next(iterator))
+        size -= 1
+        while selection and size > 0:
+            selection = selection.inner.get(next(iterator))
+            size -= 1
+        return selection and size > 0
+
+    def __contains__(self, item):
+        return self._contains(iter(item), len(item))
+
     @property
     def inner(self):
         return self._inner
-
-    def contains(self, word):
-        if len(word) == 0:
-            return True
-        elif word[0] in self._inner:
-            return self._inner[word[0]].contains(word[1:])
-        else:
-            return False
 
 
 class CharacterTreeEncoder(json.JSONEncoder):
