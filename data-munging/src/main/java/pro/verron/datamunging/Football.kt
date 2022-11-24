@@ -6,10 +6,11 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Comparator.comparing
+import kotlin.math.abs
 
 class FootballTeamRow(val team: String, private val scoredFor: Int, private val scoredAgainst: Int){
     fun ratio(): Int{
-        return (scoredAgainst + 1) / (scoredFor + scoredAgainst + 1)
+        return abs(scoredFor - scoredAgainst)
     }
 }
 private fun parser(str: String): FootballTeamRow {
@@ -23,7 +24,7 @@ private fun canParse(line: String): Boolean {
     return '.' == line[5]
 }
 @Throws(IOException::class)
-fun main(args: Array<String>) {
+fun main() {
     Files.lines(Paths.get("football.dat")).use { lines ->
         val team = lines
                 .filter(::canParse)
