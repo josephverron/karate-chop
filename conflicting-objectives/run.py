@@ -1,3 +1,6 @@
+import time
+
+
 def group_by(key, seq, container=set, adder=lambda c, v: c.add(v)):
     from functools import reduce
     from collections import defaultdict
@@ -16,12 +19,10 @@ def all_splits_exists(word, sub_words_size_split, words_buckets):
 
 
 def find_sub_words(targets, words_buckets, sub_words_size_splitter):
-    return [
-        (sub_words_size_split, word)
-        for word in targets
-        for sub_words_size_split in sub_words_size_splitter(word)
-        if all_splits_exists(word, sub_words_size_split, words_buckets)
-    ]
+    for word in targets:
+        for sub_words_size_split in sub_words_size_splitter(word):
+            if all_splits_exists(word, sub_words_size_split, words_buckets):
+                yield sub_words_size_split, word
 
 
 def strip_line(line: str):
@@ -55,8 +56,9 @@ if __name__ == '__main__':
         word_list = map(strip_line, wordlist_file)
         words_by_length = group_by(len, word_list)
 
-    target_words = words_by_length[15]
-    tuple_giver = all_combinations_of_min_size(4)
-    results = find_sub_words(target_words, words_by_length, tuple_giver)
-    for result in enumerate(results):
+
+    start = time.perf_counter()
+    target_words = words_by_length[6]
+    tuple_giver = all_combinations_of_min_size(1)
+    for result in enumerate(find_sub_words(target_words, words_by_length, all_pairs)):
         print(result)
