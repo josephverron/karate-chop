@@ -25,7 +25,7 @@ private fun canParse(line: String): Boolean {
 }
 @Throws(IOException::class)
 fun main() {
-    Files.lines(Paths.get("football.dat")).use { lines ->
+    Files.lines(Paths.get("data-munging/football.dat")).use { lines ->
         val team = lines
                 .filter(::canParse)
                 .map(::parser)

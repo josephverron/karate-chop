@@ -21,8 +21,8 @@ private fun canParse(line: String): Boolean {
     return line.length > 3 && Character.isDigit(line[3])
 }
 @Throws(IOException::class)
-fun main(args: Array<String>) {
-    Files.lines(Paths.get("weather.dat")).use { lines ->
+fun main() {
+    Files.lines(Paths.get("data-munging/weather.dat")).use { lines ->
         val day = lines
                 .filter(::canParse)
                 .map(::parser)

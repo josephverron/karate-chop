@@ -1,6 +1,3 @@
-import time
-
-
 def group_by(key, seq, container=set, adder=lambda c, v: c.add(v)):
     from functools import reduce
     from collections import defaultdict
@@ -56,9 +53,7 @@ if __name__ == '__main__':
         word_list = map(strip_line, wordlist_file)
         words_by_length = group_by(len, word_list)
 
-
-    start = time.perf_counter()
     target_words = words_by_length[6]
     tuple_giver = all_combinations_of_min_size(1)
-    for result in enumerate(find_sub_words(target_words, words_by_length, all_pairs)):
+    for result in enumerate(find_sub_words(target_words, words_by_length, all_combinations_of_min_size(2))):
         print(result)
