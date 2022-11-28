@@ -1,15 +1,16 @@
 export class checkout {
     #total = 0;
+    #prices = {}
 
     constructor(prices) {
-        this.prices = prices
+        this.#prices = prices
     }
 
     scan(item) {
-        if (item in this.prices)
-            this.#total += this.prices[item];
+        if (item in this.#prices)
+            this.#total += this.#prices[item][1];
         else
-            throw new Error(`Unknown price for item ${item} in ${Object.entries(this.prices).reduce((accumulator, entry) => accumulator + entry[0] + ":" + entry[1] + " ", "")}`)
+            throw new Error(`Unknown price for item ${item} in ${JSON.stringify(this.#prices)}`)
     }
 
     total() {
