@@ -16,8 +16,8 @@ describe('Checkout Pricing', function() {
     it('1 D costs 15', function () {
         expect(price("D")).toEqual(15);
     });
-    it('AB costs 80', function () {
+    it('Several single items addition', function () {
         expect(price("AB")).toEqual(80);
-        expect("ABCD".split("")).toEqual(["A", "B", "C", "D"])
+        expect(price("CDBA")).toEqual(115);
     });
 });
