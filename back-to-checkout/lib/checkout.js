@@ -1,23 +1,36 @@
-export class checkout {
-    #prices = {}
-    items = []
+function listPackSizes(pricing) {
+    return Object.keys(pricing).map(key => Number(key));
+}
 
-    constructor(prices) {
-        this.#prices = prices
+function biggestPackSizes(size, packs) {
+    if (size <= 0) return []
+    const maxFit = packs
+        .filter((pack) => pack <= size)
+        .reduce((currentMax, current) => Math.max(currentMax, current));
+    return [maxFit, ...biggestPackSizes(size - maxFit, packs)]
+}
+
+export class Checkout {
+    #pricings = {}
+    #items = {}
+
+    constructor(pricings) {
+        this.#pricings = pricings
     }
 
     scan(item) {
-        this.items.push(item);
+        if (item in this.#items)
+            this.#items[item] += 1;
+        else
+            this.#items[item] = 1;
     }
 
     total() {
-        let total = 0;
-        for (const item of this.items) {
-            if (item in this.#prices)
-                total += this.#prices[item][1];
-            else
-                throw new Error(`Unknown price for item ${item} in ${JSON.stringify(this.#prices)}`)
-        }
-        return total
+        return Object.entries(this.#items)
+            .filter(([item, _]) => item in this.#pricings)
+            .map(([item, qty]) => [this.#pricings[item], qty])
+            .map(([pricing, qty]) => [pricing, biggestPackSizes(qty, listPackSizes(pricing))])
+            .flatMap(([pricing, packs]) => packs.map(pack => pricing[pack]))
+            .reduce((currentTotal, subTotal) => currentTotal + subTotal, 0);
     }
 }
