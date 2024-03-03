@@ -2,6 +2,6 @@
   "name": "back-to-checkout",
   "type": "module",
   "devDependencies": {
-    "jasmine": "^4.5.0"
+    "jasmine": "^5.0.0"
   }
 }
